@@ -1,0 +1,27 @@
+.gh-shortcut-tooltip {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #24292e;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  z-index: 9999;
+}
+
+.gh-shortcut-tooltip.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gh-shortcut-tooltip kbd {
+  background: #444d56;
+  border-radius: 3px;
+  color: #ffffff;
+  display: inline-block;
+  padding: 4px 6px;
+  margin: 0 2px;
+}
