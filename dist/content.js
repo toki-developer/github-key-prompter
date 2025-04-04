@@ -3,16 +3,18 @@ const SHORTCUTS_KEY = {
     preview: 'preview'
 };
 const SHORTCUTS = {
-    preview: { keys: ['⌘', '⇧', 'P'] }
+    preview: { keys: ['Cmd', 'Shift', 'P'] }
 };
 const TOOLTIP_ID = 'gh-shortcut-helper-tooltip';
+const TOOLTIP_TEXT_ID = 'gh-shortcut-helper-tooltip-text';
 function wait(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 let tooltipHideTimeoutId = null;
 async function showTooltip(shortcut) {
     const tooltip = document.getElementById(TOOLTIP_ID);
-    if (!tooltip)
+    const tooltipText = document.getElementById(TOOLTIP_TEXT_ID);
+    if (!tooltip || !tooltipText)
         return;
     const keys = SHORTCUTS[shortcut].keys;
     // 閉じてから開き直す
@@ -23,7 +25,7 @@ async function showTooltip(shortcut) {
         tooltip.classList.remove('show');
         await wait(500);
     }
-    tooltip.innerHTML = keys.map(key => `<kbd>${key}</kbd>`).join(' + ');
+    tooltipText.innerHTML = keys.map(key => `<kbd class="gh-shortcut-helper-tooltip-kbd">${key}</kbd>`).join(' + ');
     tooltip.classList.add('show');
     tooltipHideTimeoutId = setTimeout(() => {
         tooltip.classList.remove('show');
@@ -53,8 +55,12 @@ function setUpEventListeners() {
 }
 function createTooltipDom() {
     const tooltip = document.createElement('div');
+    const tooltipText = document.createElement('p');
     tooltip.id = TOOLTIP_ID;
     tooltip.className = 'gh-shortcut-helper-tooltip';
+    tooltipText.id = TOOLTIP_TEXT_ID;
+    tooltipText.className = 'gh-shortcut-helper-tooltip-text';
+    tooltip.appendChild(tooltipText);
     document.body.appendChild(tooltip);
 }
 function main() {
